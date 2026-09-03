@@ -6,7 +6,12 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isAuthPage = pathname === "/login" || pathname === "/register";
-  const isProtected = pathname.startsWith("/dashboard") || pathname.startsWith("/tools") || pathname.startsWith("/tool");
+  const isLandingPage = pathname === "/";
+  const isProtected = pathname.startsWith("/dashboard") || pathname.startsWith("/tools") || pathname.startsWith("/tool") || pathname.startsWith("/agents") || pathname.startsWith("/agent");
+
+  if (isLandingPage) {
+    return NextResponse.next();
+  }
 
   if (isProtected && !sessionCookie) {
     return NextResponse.redirect(new URL("/login", request.url));
@@ -18,5 +23,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next|api/auth|favicon.ico|.*\\.).*)"],
+  matcher: ["/((?!_next|api|favicon.ico|.*\\.).*)"],
 };
