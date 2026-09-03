@@ -64,7 +64,7 @@ function generateWordDoc(text: string): string {
 
 export default function AgentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const agent = AGENTS.find(a => a.id === id);
+  const agent = AGENTS.find(a => a.id === id)!;
   const [files, setFiles] = useState<File[]>([]);
   const [messages, setMessages] = useState<{ role: string; content: string }[]>([]);
   const [input, setInput] = useState("");
